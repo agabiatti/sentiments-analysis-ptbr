@@ -11,11 +11,11 @@ parser.add_argument('message')
 class Predict(Resource):
   def post(self):
     args = parser.parse_args()
-    pipeline = load_joblib("models/sentiments.joblib")
-    vector = pipeline.named_steps.vectorizer.transform([args['msg']])
+    pipeline = load_joblib("models/sentiments-v2.joblib")
+    vector = pipeline.named_steps.vectorizer.transform([args['message']])
     res = pipeline.named_steps.model.predict(vector)
 
-    return { 'metadata': { 'model': 'Sentiments Analysis pt-BR', 'version': 1 }, 'predict': res[0] }, 200
+    return { 'metadata': { 'model': 'Sentiments Analysis pt-BR', 'version': 2 }, 'predict': res[0] }, 200
 
 api.add_resource(Predict, '/predict')
 
